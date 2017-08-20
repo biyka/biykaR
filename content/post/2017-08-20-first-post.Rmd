@@ -9,7 +9,7 @@ tags:
   - R, Electric
 ---
 
-This is a test first post
+This is a trial first post using blogdown.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 library(magrittr)
