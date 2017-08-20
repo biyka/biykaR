@@ -1,20 +1,43 @@
 ---
-title: First Post
+title: Registered vehicles on UK roads
 author: Ben Downe
 date: '2017-08-20'
 slug: first-post
 categories:
-  - R
+  - R 
 tags:
-  - R
+  - R, Electric
 ---
 
 This is a test first post
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
 library(magrittr)
 library(ggplot2)
-mtcars %>% ggplot(aes(x=cyl)) + geom_bar()
+library(readODS)
+library(readr)
+library(reshape2)
+
+dat <- read_ods(path = "~/Documents/GitHub/biykaR/data/veh0203.ods", col_names = TRUE, skip = 7)
+dat <- dat[2:24,]
+
+dat$Petrol <- as.numeric(gsub("[^0-9\\.]", "", dat$Petrol) )
+dat$Diesel <- as.numeric(gsub("[^0-9\\.]", "", dat$Diesel) )
+dat$`Hybrid Electric` <- as.numeric(gsub("[^0-9\\.]", "", dat$`Hybrid Electric`) )
+dat$Gas1 <- as.numeric(gsub("[^0-9\\.]", "", dat$Gas1) )
+dat$Electric <- as.numeric(gsub("[^0-9\\.]", "", dat$Electric) )
+dat$Other2 <- as.numeric(gsub("[^0-9\\.]", "", dat$Other2) )
+dat$Year <- as.factor(dat$Year)
+
+dat[is.na(dat$Other2),"Other2"] <- 0
+dat[is.na(dat$`Hybrid Electric`),"Hybrid Electric"] <- 0
+
+dat$Total <- NULL
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+dat %<>% melt(value.name = "Vehicles")
+
+dat %>% ggplot(aes(x=Year, y=Vehicles, fill=variable),stat = identity) + geom_col() + theme_bw() + coord_flip()
 
 ```
 

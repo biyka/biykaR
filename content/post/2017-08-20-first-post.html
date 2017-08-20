@@ -1,15 +1,18 @@
 ---
-title: First Post
+title: Registered vehicles on UK roads
 author: Ben Downe
 date: '2017-08-20'
 slug: first-post
 categories:
-  - R
+  - R 
 tags:
-  - R
+  - R, Electric
 ---
 
 
 
 <p>This is a test first post</p>
-<p><img src="/post/2017-08-20-first-post_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>dat %&lt;&gt;% melt(value.name = &quot;Vehicles&quot;)
+
+dat %&gt;% ggplot(aes(x=Year, y=Vehicles, fill=variable),stat = identity) + geom_col() + theme_bw() + coord_flip()</code></pre>
+<p><img src="/post/2017-08-20-first-post_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
