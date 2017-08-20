@@ -1,2 +1,0 @@
-# biykaR
-R Blog
